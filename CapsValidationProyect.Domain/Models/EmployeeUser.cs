@@ -12,6 +12,8 @@ public partial class EmployeeUser : IdentityUser<int>
     public string FullName { get; set; } = null!;
 
     public byte[]? PorfilePhoto { get; set; }
+    public string? FileExt { get; set; }
+    public string? FileName { get; set; }
 
     public bool IsActive { get; set; }
 

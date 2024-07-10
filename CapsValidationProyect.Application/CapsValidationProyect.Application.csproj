@@ -12,4 +12,16 @@
     <PackageReference Include="MediatR" Version="12.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Instructors\" />
+    <Folder Include="Interfaces\Global\" />
+    <Folder Include="Services\Global\" />
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CapsValidationProyect.Domain\CapsValidationProyect.Domain.csproj" />
+    <ProjectReference Include="..\CapsValidationProyect.Persistence\CapsValidationProyect.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

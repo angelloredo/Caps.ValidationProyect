@@ -1,29 +1,28 @@
-using Microsoft.AspNetCore.Connections;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
-using System.Data.Common;
 using Microsoft.AspNetCore.Authentication;
 using Serilog;
 using Serilog.Events;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CapsValidationProyect.API.Middleware;
 using CapsValidationProyect.Persistence.CapsValidationProyect.Domain.Models;
 using CapsValidationProyect.Persistence;
+using CapsValidationProyect.Application.Interfaces.User;
+using CapsValidationProyect.Security.UserSession;
+using CapsValidationProyect.Persistence.Interfaces;
+using CapsValidationProyect.Application.Queries.User;
+using CapsValidationProyect.API;
+using CapsValidationProyect.Persistence.DapperConnection.Employee;
+using CapsValidationProyect.Persistence.DapperConnection.Pagination;
+using CapsValidationProyect.Persistence.DapperConnection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,10 +63,10 @@ try
     var context = scope.ServiceProvider.GetRequiredService<CapsTestContext>();
     var env = app.Services.GetService<IWebHostEnvironment>();
     var settings = app.Services.GetRequiredService<IOptions<AppSettings>>();
-    //var logger = app.Services.GetService<ILogger<AppContextSeed>>();
-    //var userManager = (UserManager<EmployeeUser>)scope.ServiceProvider.GetService(typeof(UserManager<EmployeeUser>));
+    var logger = app.Services.GetService<ILogger<AppContextSeed>>();
+    var userManager = (UserManager<EmployeeUser>)scope.ServiceProvider.GetService(typeof(UserManager<EmployeeUser>));
     await context.Database.MigrateAsync();
-    //await new AppContextSeed().SeedAsync(context, env, settings, logger, userManager);
+    await new AppContextSeed().SeedAsync(context, env, settings, logger, userManager);
 
     Log.Information("Starting web host ({ApplicationContext})...", Program.AppName);
     await app.RunAsync();
@@ -96,7 +95,7 @@ static class CustomExtensionsMethods
 
     public static IServiceCollection AddCustomMvc(this IServiceCollection services)
     {
-        //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CurrentUser.Handler).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CurrentUser.Handler).Assembly));
 
         // Add framework services.
         services.AddControllers(opt =>
@@ -149,9 +148,9 @@ static class CustomExtensionsMethods
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Ideas Commscope - Core HTTP API",
+                Title = "CapsValidationProyect Commscope - Core HTTP API",
                 Version = "v1",
-                Description = "The Ideas Commscope Microservice HTTP API."
+                Description = "The CapsValidationProyect Commscope Microservice HTTP API."
             });
             //options.CustomSchemaIds(c => c.FullName);
         });
@@ -168,22 +167,27 @@ static class CustomExtensionsMethods
 
         #region Servces
         ///
-        //services.AddAutoMapper(typeof(Query.Handler));
 
         ///Servces
         ///
+
+        services.AddTransient<IFactoryConnection, FactoryConnection>();
+        services.AddScoped<IEmployee, EmployeeRepository>();
+        services.AddScoped<IPagination, PaginationRepository>();
+
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddHttpContextAccessor();
 
         //Security
-        //services.AddScoped<IJwtGenerator, JwtGenerator>();
-        //services.AddScoped<IUserSerssion, UserSession>();
+      
+        services.AddScoped<IJwtGenerator, JwtGenerator>();
+        services.AddScoped<IUserSerssion, UserSession>();
         services.AddScoped<UserManager<EmployeeUser>>();
 
         // Register TimeProvider
         services.AddSingleton<TimeProvider>(TimeProvider.System);
 
-        //services.AddAutoMapper(typeof(CurrentUser.Handler));
+        services.AddAutoMapper(typeof(CurrentUser.Handler));
 
         #endregion
 

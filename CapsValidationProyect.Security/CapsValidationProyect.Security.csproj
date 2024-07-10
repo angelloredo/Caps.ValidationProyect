@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CapsValidationProyect.Application\CapsValidationProyect.Application.csproj" />
+    <ProjectReference Include="..\CapsValidationProyect.Domain\CapsValidationProyect.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
