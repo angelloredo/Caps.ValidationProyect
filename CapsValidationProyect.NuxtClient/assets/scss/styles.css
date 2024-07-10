@@ -1,0 +1,9 @@
+/* assets/scss/styles.css */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  a {
+    color: blue;
+    background-image: url('../images/commscope-background.png');  
+  }

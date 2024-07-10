@@ -1,0 +1,9 @@
+// assets/scss/main.scss
+@import '_variables';
+@import './styles.css';
+
+body {
+  background-color: $primary-color;
+  color: $secondary-color;
+  font-size: $font-size-base;
+}

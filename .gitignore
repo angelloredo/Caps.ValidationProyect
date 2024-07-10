@@ -1,0 +1,59 @@
+# .NET Core
+bin/
+obj/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.vspscc
+*.vssscc
+.vscode/
+*.pdb
+*.opendb
+*.ide
+
+# Logs
+*.log
+
+
+
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Build files
+dist/
+build/
+
+# Dependency directories
+jspm_packages/
+
+# Config files
+.env
+
+# OSX
+.DS_Store
+
+# Thumbnails
+._*
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+*.vsidx
+FileContentIndex
+.v2
+
+*.bin

@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapsValidationProyect.API", "CapsValidationProyect.API\CapsValidationProyect.API.csproj", "{9C66C550-D815-4F19-A518-532C31C7C7EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapsValidationProyect.Application", "CapsValidationProyect.Application\CapsValidationProyect.Application.csproj", "{C481778D-9C4A-463A-BC64-6E098470DFAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapsValidationProyect.Domain", "CapsValidationProyect.Domain\CapsValidationProyect.Domain.csproj", "{9B8E6ED9-3B8E-43BD-A22B-6FD638A5FD22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapsValidationProyect.Persistence", "CapsValidationProyect.Persistence\CapsValidationProyect.Persistence.csproj", "{C13BAA7C-75EE-4BB6-A80E-95FDC17C3ED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapsValidationProyect.Security", "CapsValidationProyect.Security\CapsValidationProyect.Security.csproj", "{0E4C7D4F-6CCC-4BF6-8281-7100688BFB61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C66C550-D815-4F19-A518-532C31C7C7EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C66C550-D815-4F19-A518-532C31C7C7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C66C550-D815-4F19-A518-532C31C7C7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C66C550-D815-4F19-A518-532C31C7C7EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C481778D-9C4A-463A-BC64-6E098470DFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C481778D-9C4A-463A-BC64-6E098470DFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C481778D-9C4A-463A-BC64-6E098470DFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C481778D-9C4A-463A-BC64-6E098470DFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B8E6ED9-3B8E-43BD-A22B-6FD638A5FD22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B8E6ED9-3B8E-43BD-A22B-6FD638A5FD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B8E6ED9-3B8E-43BD-A22B-6FD638A5FD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B8E6ED9-3B8E-43BD-A22B-6FD638A5FD22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C13BAA7C-75EE-4BB6-A80E-95FDC17C3ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C13BAA7C-75EE-4BB6-A80E-95FDC17C3ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C13BAA7C-75EE-4BB6-A80E-95FDC17C3ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C13BAA7C-75EE-4BB6-A80E-95FDC17C3ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4C7D4F-6CCC-4BF6-8281-7100688BFB61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4C7D4F-6CCC-4BF6-8281-7100688BFB61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4C7D4F-6CCC-4BF6-8281-7100688BFB61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4C7D4F-6CCC-4BF6-8281-7100688BFB61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {018A2ABD-C973-4EBB-906D-FDF1DF82D676}
+	EndGlobalSection
+EndGlobal
