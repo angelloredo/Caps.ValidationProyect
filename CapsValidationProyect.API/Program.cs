@@ -23,6 +23,9 @@ using CapsValidationProyect.API;
 using CapsValidationProyect.Persistence.DapperConnection.Employee;
 using CapsValidationProyect.Persistence.DapperConnection.Pagination;
 using CapsValidationProyect.Persistence.DapperConnection;
+using CapsValidationProyect.Application.Queries.Employee;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,14 +98,20 @@ static class CustomExtensionsMethods
 
     public static IServiceCollection AddCustomMvc(this IServiceCollection services)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CurrentUser.Handler).Assembly));
+        //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CurrentUser.Handler).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Query.Handler).Assembly));
 
+        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+        services.AddValidatorsFromAssemblyContaining<Query>();
         // Add framework services.
         services.AddControllers(opt =>
         {
             var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
             opt.Filters.Add(new AuthorizeFilter(policy));
         });
+
+
+     
 
         services.AddCors(options =>
         {
@@ -148,9 +157,9 @@ static class CustomExtensionsMethods
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "CapsValidationProyect Commscope - Core HTTP API",
+                Title = "CapsValidationProyect  - Core HTTP API",
                 Version = "v1",
-                Description = "The CapsValidationProyect Commscope Microservice HTTP API."
+                Description = "The CapsValidationProyect  Microservice HTTP API."
             });
             //options.CustomSchemaIds(c => c.FullName);
         });

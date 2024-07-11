@@ -8,12 +8,12 @@ namespace CapsValidationProyect.Persistence.DapperConnection.Employee
     {
         Task<IEnumerable<EmployeeModel>> GetList();
 
-        Task<EmployeeModel> GetById(Guid id);
+        Task<EmployeeModel> GetById(int id);
 
         Task<int> Create(int departmentId, string firstName, string middleName, string lastName, string mothersLastName);
 
-        Task<int> Update(int departmentId, string firstName, string middleName, string lastName, string mothersLastName);
+        Task<int> Update(int id, int departmentId, string firstName, string middleName, string lastName, string mothersLastName);
 
-        Task<int> Delete(Guid id);
+        Task<int> Delete(int id);
     }
 }

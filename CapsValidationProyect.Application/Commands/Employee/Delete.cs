@@ -7,7 +7,7 @@ namespace CapsValidationProyect.Application.Commands.Employee
     {
         public class Execute : IRequest<Unit>
         {
-            public Guid Id { get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Execute, Unit>

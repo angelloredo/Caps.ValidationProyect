@@ -11,7 +11,8 @@ namespace CapsValidationProyect.Application.Commands.Employee
     {
         public class Command : IRequest<Unit>
         {
-            public int DepartmentId { get; set; }
+            public int Id { get; set; }
+            public int? DepartmentId { get; set; } = null;
 
             public string FirstName { get; set; } = null!;
 
@@ -26,7 +27,7 @@ namespace CapsValidationProyect.Application.Commands.Employee
         {
             public ExecuteValidator()
             {
-                RuleFor(x => x.DepartmentId).NotEmpty();
+                RuleFor(x => x.DepartmentId).NotNull();
                 RuleFor(x => x.FirstName).NotEmpty();
                 RuleFor(x => x.LastName).NotEmpty();
             }
@@ -43,7 +44,7 @@ namespace CapsValidationProyect.Application.Commands.Employee
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var result = await _EmployeeRepository.Create(request.DepartmentId, request.FirstName, request.MiddleName, request.LastName, request.MothersLastName);
+                var result = await _EmployeeRepository.Create(Convert.ToInt32(request.DepartmentId), request.FirstName, request.MiddleName, request.LastName, request.MothersLastName);
 
                 if (result > 0)
                 {
@@ -53,7 +54,7 @@ namespace CapsValidationProyect.Application.Commands.Employee
                 throw new Exception("The Employee could not be inserted");
             }
 
-            
+
         }
     }
 }

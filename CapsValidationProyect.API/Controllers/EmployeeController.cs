@@ -9,15 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CapsValidationProyect.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[AllowAnonymous]
     public class EmployeeController : BaseController
     {
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<ActionResult<PaginationModel>> GetEmployees()
+        [HttpPost("GetEmployeePagination")]
+        public async Task<ActionResult<PaginationModel>> GetEmployees(Query.ListQuery data)
         {
-            return await Mediator.Send(new Query.ListQuery());
+            return await Mediator.Send(data);
         }
 
         [HttpPost]
@@ -29,18 +27,19 @@ namespace CapsValidationProyect.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Unit>> Update(int id, Update.Execute data)
         {
-            data.DepartmentId = id;
+
+            data.Id = id;
             return await Mediator.Send(data);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Unit>> Delete(Guid id)
+        public async Task<ActionResult<Unit>> Delete(int id)
         {
             return await Mediator.Send(new Delete.Execute { Id = id });
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeModel>> GetById(Guid id)
+        public async Task<ActionResult<EmployeeModel>> GetById(int id)
         {
             return await Mediator.Send(new QueryId.Execute { Id = id });
         }

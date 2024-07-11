@@ -12,6 +12,7 @@ namespace CapsValidationProyect.Application.Commands.Employee
     {
         public class Execute : IRequest<Unit>
         {
+            public int Id { get; set; }
             public int DepartmentId { get; set; }
 
             public string FirstName { get; set; } = null!;
@@ -43,7 +44,7 @@ namespace CapsValidationProyect.Application.Commands.Employee
             }
             public async Task<Unit> Handle(Execute request, CancellationToken cancellationToken)
             {
-                var resultado = await _EmployeeRepositorio.Update(request.DepartmentId, request.FirstName, request.MiddleName, request.LastName, request.MothersLastName);
+                var resultado = await _EmployeeRepositorio.Update(request.Id, request.DepartmentId, request.FirstName, request.MiddleName, request.LastName, request.MothersLastName);
                 if (resultado > 0)
                 {
                     return Unit.Value;

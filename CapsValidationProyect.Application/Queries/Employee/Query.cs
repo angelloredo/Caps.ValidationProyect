@@ -28,9 +28,8 @@ namespace CapsValidationProyect.Application.Queries.Employee
             public async Task<PaginationModel> Handle(ListQuery request, CancellationToken cancellationToken)
             {
                 var storedProcedure = "usp_get_employee_pagination";
-                var ordenamiento = "Titulo";
+                var ordenamiento = "FullName";
                 var parametros = new Dictionary<string, object>();
-                parametros.Add("FullName", request.Name);
                 return await _Pagination.ReturnPagination(storedProcedure, request.NumeroPagina, request.CantidadElementos, parametros, ordenamiento);
 
 

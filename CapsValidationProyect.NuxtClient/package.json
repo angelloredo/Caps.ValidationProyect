@@ -13,6 +13,8 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@pinia/nuxt": "^0.5.1",
+    "@vee-validate/i18n": "^4.13.2",
+    "@vee-validate/rules": "^4.13.2",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "css-loader": "^7.1.2",
@@ -20,9 +22,11 @@
     "pinia": "^2.1.7",
     "sass": "^1.77.6",
     "sass-loader": "^14.2.1",
+    "vee-validate": "^4.13.2",
     "vue": "latest",
     "vue-awesome-sidebar": "^1.2.4",
-    "vue-style-loader": "^4.1.3"
+    "vue-style-loader": "^4.1.3",
+    "vue3-toastify": "^0.2.2"
   },
   "devDependencies": {
     "vite-plugin-vuetify": "^2.0.3",

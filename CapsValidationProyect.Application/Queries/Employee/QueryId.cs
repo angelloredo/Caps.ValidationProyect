@@ -12,7 +12,7 @@ namespace CapsValidationProyect.Application.Queries.Employee
     {
         public class Execute : IRequest<EmployeeModel>
         {
-            public Guid Id { get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Execute, EmployeeModel>

@@ -17,6 +17,7 @@ namespace CapsValidationProyect.Persistence.DapperConnection.Employee
     public string LastName { get; set; } = null!;
 
     public string MothersLastName { get; set; } = null!;
+    public string Department { get; set; } = null!;
 
     }
 }

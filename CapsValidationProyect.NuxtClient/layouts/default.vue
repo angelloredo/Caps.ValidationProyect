@@ -8,7 +8,7 @@
     </VueAwesomeSideBar>
 
 
-    <div style="padding: 20px;">
+    <div style="padding: 20px; width: 100%;">
       <slot></slot>
     </div>
   </div>
@@ -27,7 +27,7 @@ const miniMenu = ref(false)
 
 const testMenu = [
   {
-    name: 'Getting Started',
+    name: 'Home',
     icon: { text: 'home', class: 'bi bi-house' },
     children: [
       {
