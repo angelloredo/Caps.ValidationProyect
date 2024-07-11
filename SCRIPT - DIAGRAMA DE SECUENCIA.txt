@@ -1,0 +1,92 @@
+@startuml
+skinparam sequence {
+    ArrowColor Black
+    LifeLineBorderColor Black
+}
+
+actor User
+participant Controller
+participant ApplicationService
+participant DomainService
+participant Repository
+database SQLServer as DB
+
+User -> Controller: Request to create employee
+activate Controller
+Controller -> ApplicationService: CreateEmployeeCommand
+activate ApplicationService
+ApplicationService -> DomainService: ValidateEmployeeData
+activate DomainService
+DomainService --> ApplicationService: Validation result
+deactivate DomainService
+ApplicationService -> Repository: SaveEmployeeToDatabase
+activate Repository
+Repository -> DB: Execute SQL Insert
+DB --> Repository: Success/Failure
+deactivate Repository
+ApplicationService --> Controller: Success/Failure response
+deactivate ApplicationService
+Controller --> User: Response
+deactivate Controller
+
+User -> Controller: Request to fetch employees by ID
+activate Controller
+Controller -> ApplicationService: GetEmployeeByIdQuery
+activate ApplicationService
+ApplicationService -> Repository: RetrieveEmployeeByIdFromDatabase
+activate Repository
+Repository -> DB: Execute SQL Select by ID
+DB --> Repository: Employee data
+deactivate Repository
+ApplicationService --> Controller: Employee data
+deactivate ApplicationService
+Controller --> User: Employee details
+deactivate Controller
+
+User -> Controller: Request to fetch paginated employees
+activate Controller
+Controller -> ApplicationService: GetEmployeesPaginationQuery
+activate ApplicationService
+ApplicationService -> Repository: RetrieveEmployeesPaginationFromDatabase
+activate Repository
+Repository -> DB: Execute SQL Select for pagination
+DB --> Repository: Paginated employee data
+deactivate Repository
+ApplicationService --> Controller: Paginated employee data
+deactivate ApplicationService
+Controller --> User: Paginated employee list
+deactivate Controller
+
+User -> Controller: Request to update employee details
+activate Controller
+Controller -> ApplicationService: UpdateEmployeeCommand
+activate ApplicationService
+ApplicationService -> DomainService: ValidateEmployeeData
+activate DomainService
+DomainService --> ApplicationService: Validation result
+deactivate DomainService
+ApplicationService -> Repository: UpdateEmployeeInDatabase
+activate Repository
+Repository -> DB: Execute SQL Update
+DB --> Repository: Success/Failure
+deactivate Repository
+ApplicationService --> Controller: Success/Failure response
+deactivate ApplicationService
+Controller --> User: Response
+deactivate Controller
+
+User -> Controller: Request to delete employee
+activate Controller
+Controller -> ApplicationService: DeleteEmployeeCommand
+activate ApplicationService
+ApplicationService -> Repository: DeleteEmployeeFromDatabase
+activate Repository
+Repository -> DB: Execute SQL Delete
+DB --> Repository: Success/Failure
+deactivate Repository
+ApplicationService --> Controller: Success/Failure response
+deactivate ApplicationService
+Controller --> User: Response
+deactivate Controller
+
+@enduml

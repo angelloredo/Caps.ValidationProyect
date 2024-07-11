@@ -1,0 +1,56 @@
+@startuml
+actor Tester
+
+participant "Create Employee" as TC1
+participant "Get Employee by ID" as TC2
+participant "Get Employees Pagination" as TC3
+participant "Update Employee" as TC4
+participant "Delete Employee" as TC5
+database SQLServer as DB
+
+Tester --> TC1: Execute
+activate TC1
+TC1 --> DB: Execute SQL Insert
+activate DB
+DB --> TC1: Success/Failure
+deactivate DB
+TC1 --> Tester: Verify result
+deactivate TC1
+
+Tester --> TC2: Execute
+activate TC2
+TC2 --> DB: Execute SQL Select by ID
+activate DB
+DB --> TC2: Employee data
+deactivate DB
+TC2 --> Tester: Verify result
+deactivate TC2
+
+Tester --> TC3: Execute
+activate TC3
+TC3 --> DB: Execute SQL Select for pagination
+activate DB
+DB --> TC3: Paginated employee data
+deactivate DB
+TC3 --> Tester: Verify result
+deactivate TC3
+
+Tester --> TC4: Execute
+activate TC4
+TC4 --> DB: Execute SQL Update
+activate DB
+DB --> TC4: Success/Failure
+deactivate DB
+TC4 --> Tester: Verify result
+deactivate TC4
+
+Tester --> TC5: Execute
+activate TC5
+TC5 --> DB: Execute SQL Delete
+activate DB
+DB --> TC5: Success/Failure
+deactivate DB
+TC5 --> Tester: Verify result
+deactivate TC5
+
+@enduml
