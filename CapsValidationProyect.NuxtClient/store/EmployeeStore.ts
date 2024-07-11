@@ -2,13 +2,16 @@ import { defineStore } from "pinia";
 import type { IEmployeeModel } from "~/Entities/Employee/EmployeeModel";
 import { PaginationModel, type IPaginationModel } from "~/Entities/PaginationModel";
 import { toast } from 'vue3-toastify';
+import { useRouter } from 'vue-router';
 
 interface IState {
     employees: IEmployeeModel[],
     employeesPagination: IPaginationModel,
     EmployeeActual: IEmployeeModel | null,
-    isLoading: boolean
+    isLoading: boolean,
+    accessToken: string | null // Token JWT
 }
+
 const runtimeConfig = useRuntimeConfig();
 const defaultUrl = ref(runtimeConfig.public.myPublicVariable);
 const router = useRouter();
@@ -18,11 +21,18 @@ export const useEmployeeStore = defineStore('employees', {
         employees: [],
         employeesPagination: new PaginationModel(),
         EmployeeActual: null,
-        isLoading: false
+        isLoading: false,
+        accessToken: "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhbmdlbGxvcmVkbyIsIm5iZiI6MTcyMDY2OTQ3NiwiZXhwIjoxNzIzMjYxNDc2LCJpYXQiOjE3MjA2Njk0NzZ9.oXOY7-nMihu3nJkvBtWxoq_RGogOYed3zye8KMccF8Yiq9XyYkLzumAhwjmdkG-kR-xALCo1k7-D3lit71g4_Q" // Initialize with null
     }),
     actions: {
+        // Método para establecer el token JWT después del inicio de sesión
+        setAccessToken(token: string) {
+            this.accessToken = token;
+        },
+
+        // Métodos para realizar solicitudes con el token JWT
         async getById(id: number) {
-            const { data, error } = await useFetch(`${defaultUrl.value}/api/Employee/${id}`, {
+            const { data, error } = await this.fetchWithToken(`${defaultUrl.value}/api/Employee/${id}`, {
                 method: 'GET'
             });
             if (error.value) {
@@ -36,7 +46,7 @@ export const useEmployeeStore = defineStore('employees', {
         },
         async obtenerEmployeesPagination(pageNumber: number, pageSize: number = 0) {
             this.isLoading = true;
-            const { data, error } = await useFetch(defaultUrl.value + '/api/Employee/GetEmployeePagination', {
+            const { data, error } = await this.fetchWithToken(defaultUrl.value + '/api/Employee/GetEmployeePagination', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -57,7 +67,7 @@ export const useEmployeeStore = defineStore('employees', {
             this.isLoading = false;
         },
         async obtenerEmployees() {
-            const { data, error } = await useFetch(defaultUrl.value + '/api/Employee', {
+            const { data, error } = await this.fetchWithToken(defaultUrl.value + '/api/Employee', {
                 method: 'GET'
             });
             if (error.value) {
@@ -68,7 +78,7 @@ export const useEmployeeStore = defineStore('employees', {
             this.employees = data.value as IEmployeeModel[] ?? [];
         },
         async agregar(body: IEmployeeModel) {
-            const { data, error } = await useFetch(defaultUrl.value + '/api/Employee', {
+            const { data, error } = await this.fetchWithToken(defaultUrl.value + '/api/Employee', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,13 +91,13 @@ export const useEmployeeStore = defineStore('employees', {
                 return;
             } else {
                 // this.obtenerEmployees(); // Refetch the list after adding a new employee
-                navigateTo('/Employees')  
+                router.push('/Employees'); // Navigate to Employees page
                 toast.success("Empleado guardado correctamente.");
             }
 
         },
         async actualizar(body: IEmployeeModel) {
-            const { data, error } = await useFetch(`${defaultUrl.value}/api/Employee/${body.id}`, {
+            const { data, error } = await this.fetchWithToken(`${defaultUrl.value}/api/Employee/${body.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -100,12 +110,12 @@ export const useEmployeeStore = defineStore('employees', {
                 return;
             } else {
                 // this.obtenerEmployees(); // Refetch the list after updating an employee
-                navigateTo('/Employees')   
+                router.push('/Employees'); // Navigate to Employees page
                 toast.success("Empleado actualizado correctamente.");
             }
         },
         async eliminar(id: number) {
-            const { data, error } = await useFetch(`${defaultUrl.value}/api/Employee/${id}`, {
+            const { data, error } = await this.fetchWithToken(`${defaultUrl.value}/api/Employee/${id}`, {
                 method: 'DELETE'
             });
             if (error.value) {
@@ -114,7 +124,7 @@ export const useEmployeeStore = defineStore('employees', {
                 return;
             } else {
                 this.employeesPagination.recordList = this.employeesPagination.recordList.filter(x => x.id !== id);
-                navigateTo('/Employees')  
+                router.push('/Employees'); // Navigate to Employees page
                 toast.success("Empleado eliminado correctamente.");
             }
 
@@ -139,6 +149,25 @@ export const useEmployeeStore = defineStore('employees', {
             } else {
                 toast.error("Ocurrió un error inesperado.");
             }
-        }
+        },
+
+        // Función para manejar las solicitudes con token JWT
+        async fetchWithToken(url: string, options: any) {
+            if (!this.accessToken) {
+                toast.error("Error 401. Sin autorización.");
+            }
+
+            options.headers = {
+                ...options.headers,
+                Authorization: `Bearer ${this.accessToken}`
+            };
+
+            const response = await useFetch(url, options);
+
+            // Manejo de errores, etc.
+            return response;
+        },
+
+        // Resto de métodos y acciones ...
     }
 });
